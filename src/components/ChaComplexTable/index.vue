@@ -9,6 +9,15 @@
       </template>
     </cha-filter>
 
+    <!--  表格操作栏  -->
+    <cha-action-bar
+      ref="chaActionBar"
+      :entity-display-name="entityDisplayName">
+      <template #action-bar-addon-batch="{ display }">
+        <slot name="action-bar-addon-batch" :display="display"></slot>
+      </template>
+    </cha-action-bar>
+
     <!--  数据表格栏  -->
     <cha-table
       ref="chaTable">
@@ -38,6 +47,7 @@
 
 <script>
 import ChaFilter from './components/ChaFilter'
+import ChaActionBar from './components/ChaActionBar'
 import ChaTable from './components/ChaTable'
 import ChaDetailDialog from './components/ChaDetailDialog'
 import { RemoteDataManager, LocalDataManager } from './manager/data-manager'
@@ -47,6 +57,7 @@ export default {
   name: 'ChaComplexTable',
   components: {
     ChaFilter,
+    ChaActionBar,
     ChaTable,
     ChaDetailDialog
   },
@@ -76,6 +87,7 @@ export default {
   mounted () {
     this.compManager.setComps(
       this.$refs.chaFilter,
+      this.$refs.chaActionBar,
       this.$refs.chaTable,
       this.$refs.chaDetailDialog
     )
