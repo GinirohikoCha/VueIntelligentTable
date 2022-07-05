@@ -57,6 +57,15 @@ export class DataManager {
       resolve()
     })
   }
+
+  deleteBatch (entities) {
+    return new Promise((resolve) => {
+      for (const entity of entities) {
+        this.delete(entity).then(() => {})
+      }
+      resolve()
+    })
+  }
 }
 
 export class RemoteDataManager extends DataManager {
@@ -98,6 +107,17 @@ export class RemoteDataManager extends DataManager {
   delete (entity) {
     return new Promise((resolve, reject) => {
       deleteBatch(this.entityName, [entity.id]).then(response => {
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  }
+
+  deleteBatch (entities) {
+    return new Promise((resolve, reject) => {
+      const ids = entities.map(item => { return item.id })
+      deleteBatch(this.entityName, ids).then(response => {
         resolve(response)
       }).catch(error => {
         reject(error)
