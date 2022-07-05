@@ -4,6 +4,9 @@ import router from './router'
 import store from './store'
 import installElementPlus from './plugins/element'
 
+// mock
+import './mock'
+
 const app = createApp(App)
 installElementPlus(app)
 app.use(store).use(router).mount('#app')

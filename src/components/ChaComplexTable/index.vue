@@ -4,18 +4,40 @@
     <cha-filter
       ref="chaFilter">
       <!--   筛选项   -->
-      <template #filter-items><slot name="filter-items"></slot></template>
+      <template #filter-items="{collapse, updateOffset}">
+        <slot name="filter-items" :collapse="collapse" :updateOffset="updateOffset"/>
+      </template>
     </cha-filter>
+
+    <!--  数据表格栏  -->
+    <cha-table
+      ref="chaTable">
+      <template #table-index-column>
+        <slot name="table-index-column"/>
+      </template>
+      <template #table-selection-column>
+        <slot name="table-selection-column"/>
+      </template>
+      <template #table-columns>
+        <slot name="table-columns"/>
+      </template>
+      <template #table-action-column>
+        <slot name="table-action-column"/>
+      </template>
+    </cha-table>
   </div>
 </template>
 
 <script>
 import ChaFilter from './components/ChaFilter'
+import ChaTable from './components/ChaTable'
+import { DataManager } from './manager/data-manager'
 
 export default {
   name: 'ChaComplexTable',
   components: {
-    ChaFilter
+    ChaFilter,
+    ChaTable
   },
   props: {
     /* >>>>>> General Props <<<<<< */
@@ -27,7 +49,7 @@ export default {
   },
   provide () {
     return {
-      size: 'small'
+      dataManager: new DataManager(this.entityName)
     }
   }
 }
