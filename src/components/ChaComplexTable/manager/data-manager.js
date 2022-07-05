@@ -1,12 +1,12 @@
-import { list } from '../api'
+import { detail, list } from '../api'
 
 export class DataManager {
-  entityName = null
   /**
-   * 表格数据
+   * 原始数据
    * @type {Array}
    */
   data = []
+
   /**
    * 数据总数（远程模式时为服务器可查询到的所有数据）
    * @type {number}
@@ -19,7 +19,47 @@ export class DataManager {
    */
   selection = []
 
+  /**
+   * 详情数据
+   * @type {Object}
+   */
+  detailData = {}
+
+  refresh () {
+    return new Promise((resolve) => {
+      resolve()
+    })
+  }
+
+  filter () {
+    console.log('filter')
+  }
+
+  reset () {
+    console.log('reset')
+  }
+
+  select (selection) {
+    this.selection = selection
+  }
+
+  detail (entity) {
+    return new Promise((resolve) => {
+      this.detailData = entity
+      resolve()
+    })
+  }
+}
+
+export class RemoteDataManager extends DataManager {
+  /**
+   * 访问路径组成部分
+   * @type {string}
+   */
+  entityName
+
   constructor (entityName) {
+    super()
     this.entityName = entityName
   }
 
@@ -35,15 +75,21 @@ export class DataManager {
     })
   }
 
-  filter () {
-    console.log('filter')
+  detail (entity) {
+    this.detailData = entity
+    return new Promise((resolve, reject) => {
+      detail(this.entityName, entity.id).then(response => {
+        this.detailData = response.data
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
+}
 
-  reset () {
-    console.log('reset')
-  }
-
-  select (selection) {
-    this.selection = selection
+export class LocalDataManager extends DataManager {
+  detail (entity) {
+    this.detailData = entity
   }
 }

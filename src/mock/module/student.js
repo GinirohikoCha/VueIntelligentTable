@@ -56,10 +56,12 @@ Mock.mock(/mock\/student\/list/, 'post', (request) => {
 })
 
 Mock.mock(/mock\/student\/*/, 'get', (request) => {
+  const id = request.url.substring(request.url.lastIndexOf('/') + 1)
+
   return {
     code: 200,
     msg: '操作成功',
-    data: data.items[0]
+    data: data.items.find(item => item.id === id)
   }
 })
 

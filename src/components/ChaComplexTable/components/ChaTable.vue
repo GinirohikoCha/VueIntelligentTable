@@ -52,7 +52,7 @@ export default {
     Edit,
     Delete
   },
-  inject: ['dataManager'],
+  inject: ['dataManager', 'compManager'],
   data () {
     return {
       loading: false
@@ -72,6 +72,10 @@ export default {
   methods: {
     handleSelectionChange (selection) {
       this.dataManager.select(selection)
+    },
+    handleDetail (row) {
+      this.dataManager.detail(row)
+      this.compManager.openDetailDialog()
     }
   },
   mounted () {
