@@ -42,6 +42,19 @@
         <slot name="detail-dialog-items" :entityData="entityData" :visible="visible" :close="close"></slot>
       </template>
     </cha-detail-dialog>
+
+    <!--  数据操作对话框  -->
+    <cha-form-dialog
+      ref="chaFormDialog"
+      :entity-display-name="entityDisplayName"
+      :entity-form-rules="entityFormRules">
+      <template #form-items="{ entityFormData }">
+        <slot name="form-dialog-items" :entityFormData="entityFormData"></slot>
+      </template>
+      <template #dialog-footer>
+        <slot name="form-dialog-footer"></slot>
+      </template>
+    </cha-form-dialog>
   </div>
 </template>
 
@@ -50,6 +63,7 @@ import ChaFilter from './components/ChaFilter'
 import ChaActionBar from './components/ChaActionBar'
 import ChaTable from './components/ChaTable'
 import ChaDetailDialog from './components/ChaDetailDialog'
+import ChaFormDialog from './components/ChaFormDialog'
 import { RemoteDataManager, LocalDataManager } from './manager/data-manager'
 import { CompManager } from './manager/comp-manager'
 
@@ -59,7 +73,8 @@ export default {
     ChaFilter,
     ChaActionBar,
     ChaTable,
-    ChaDetailDialog
+    ChaDetailDialog,
+    ChaFormDialog
   },
   props: {
     /* >>>>>> General Props <<<<<< */
@@ -70,7 +85,9 @@ export default {
     entityName: String,
     /** 用来代替 entityName 的显示名称（比如可以用于中文本地化时）
      *  未提供时与 entityName 相同 */
-    entityDisplayName: String
+    entityDisplayName: String,
+    /** 创建/修改时表单验证规则 */
+    entityFormRules: Object
   },
   provide () {
     return {
@@ -89,7 +106,8 @@ export default {
       this.$refs.chaFilter,
       this.$refs.chaActionBar,
       this.$refs.chaTable,
-      this.$refs.chaDetailDialog
+      this.$refs.chaDetailDialog,
+      this.$refs.chaFormDialog
     )
   }
 }

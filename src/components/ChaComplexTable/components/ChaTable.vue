@@ -88,6 +88,10 @@ export default {
       this.dataManager.detail(row)
       this.compManager.openDetailDialog()
     },
+    handleUpdate (row) {
+      this.dataManager.edit(row)
+      this.compManager.openUpdateDialog()
+    },
     handleDelete (row) {
       ElMessageBox.confirm(
         '确认删除该数据？',

@@ -19,6 +19,20 @@
         <el-descriptions-item label="性别">{{ ['女', '男'][entityData.gender] }}</el-descriptions-item>
       </el-descriptions>
     </template>
+
+    <template #form-dialog-items="{ entityFormData }">
+      <el-form-item label="姓名"><el-input v-model="entityFormData.name"></el-input></el-form-item>
+      <el-form-item label="年龄"><el-input v-model="entityFormData.age"></el-input></el-form-item>
+      <el-form-item label="性别">
+        <el-select v-model="entityFormData.gender">
+          <el-option
+            v-for="item in [{ label: '女', value: 0}, { label: '男', value: 1}]"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"/>
+        </el-select>
+      </el-form-item>
+    </template>
   </cha-complex-table>
 </template>
 

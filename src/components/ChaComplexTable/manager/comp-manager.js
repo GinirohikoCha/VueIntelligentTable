@@ -3,12 +3,14 @@ export class CompManager {
   actionBar
   table
   detailDialog
+  formDialog
 
-  setComps (filter, actionBar, table, detailDialog) {
+  setComps (filter, actionBar, table, detailDialog, formDialog) {
     this.filter = filter
     this.actionBar = actionBar
     this.table = table
     this.detailDialog = detailDialog
+    this.formDialog = formDialog
   }
 
   refresh () {
@@ -26,6 +28,18 @@ export class CompManager {
   openDetailDialog () {
     if (this.detailDialog) {
       this.detailDialog.openDialog()
+    }
+  }
+
+  openCreateDialog () {
+    if (this.formDialog) {
+      this.formDialog.openDialog('create')
+    }
+  }
+
+  openUpdateDialog () {
+    if (this.formDialog) {
+      this.formDialog.openDialog('update')
     }
   }
 }

@@ -1,4 +1,5 @@
 import { deleteBatch, detail, list } from '../api'
+import _ from 'lodash'
 
 export class DataManager {
   /**
@@ -25,6 +26,12 @@ export class DataManager {
    */
   detailData = {}
 
+  createData = {}
+
+  updateData = {}
+
+  editIndex = -1
+
   refresh () {
     return new Promise((resolve) => {
       resolve()
@@ -41,6 +48,11 @@ export class DataManager {
 
   select (selection) {
     this.selection = selection
+  }
+
+  edit (entity) {
+    this.editIndex = this.data.indexOf(entity)
+    this.updateData = _.cloneDeep(entity)
   }
 
   detail (entity) {

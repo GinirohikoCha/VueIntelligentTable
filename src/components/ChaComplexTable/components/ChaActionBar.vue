@@ -40,20 +40,20 @@
 <!--            <el-icon style="width: 20px; height: 20px"><download @click="handleDownloadTemplate"/></el-icon>-->
 <!--          </div>-->
 <!--        </el-tooltip>-->
-        <el-popover
-          placement="bottom"
-          trigger="hover"
-          title="列项开关">
-          <template #reference>
-            <div>
-              <el-icon style="width: 20px; height: 20px"><operation/></el-icon>
-            </div>
-          </template>
-          <template #default>
+<!--        <el-popover-->
+<!--          placement="bottom"-->
+<!--          trigger="hover"-->
+<!--          title="列项开关">-->
+<!--          <template #reference>-->
+<!--            <div>-->
+<!--              <el-icon style="width: 20px; height: 20px"><operation/></el-icon>-->
+<!--            </div>-->
+<!--          </template>-->
+<!--          <template #default>-->
 <!--            <cha-column-operation-panel-->
 <!--              v-model:table-display="modelTableDisplay"/>-->
-          </template>
-        </el-popover>
+<!--          </template>-->
+<!--        </el-popover>-->
         <el-tooltip content="设置">
           <div>
             <el-icon style="width: 20px; height: 20px"><set-up @click="handleSetUp"/></el-icon>
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { Plus, Files, Edit, Delete, Refresh, Operation, SetUp, FullScreen } from '@element-plus/icons-vue'
+import { Plus, Files, Edit, Delete, Refresh, SetUp, FullScreen } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 export default {
@@ -76,7 +76,7 @@ export default {
     Edit,
     Delete,
     Refresh,
-    Operation,
+    // Operation,
     SetUp,
     // Download,
     FullScreen
@@ -101,7 +101,7 @@ export default {
       this.compManager.fullScreen()
     },
     handleCreate () {
-
+      this.compManager.openCreateDialog()
     },
     handleExport () {},
     handleExportBatch () {},
