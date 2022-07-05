@@ -67,8 +67,20 @@ Mock.mock(/mock\/student\/*/, 'get', (request) => {
 
 Mock.mock(/mock\/student\/create/, 'post', (request) => {
   console.debug(request)
-  return {
-    code: 200,
-    msg: '添加成功'
+
+  return { code: 200, msg: '添加成功' }
+})
+
+Mock.mock(/mock\/student\/delete/, 'delete', (request) => {
+  const ids = JSON.parse(request.body)
+  for (const id of ids) {
+    const index = data.items.findIndex(item => item.id === id)
+    if (index) {
+      data.items.splice(index, 1)
+    } else {
+      return { code: 400, msg: '发生错误' }
+    }
   }
+
+  return { code: 200, msg: '操作成功' }
 })

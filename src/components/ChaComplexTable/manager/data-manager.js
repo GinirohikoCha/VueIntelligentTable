@@ -1,4 +1,4 @@
-import { detail, list } from '../api'
+import { deleteBatch, detail, list } from '../api'
 
 export class DataManager {
   /**
@@ -49,6 +49,14 @@ export class DataManager {
       resolve()
     })
   }
+
+  delete (entity) {
+    return new Promise((resolve) => {
+      const index = this.data.indexOf(entity)
+      this.data.splice(index, 1)
+      resolve()
+    })
+  }
 }
 
 export class RemoteDataManager extends DataManager {
@@ -86,10 +94,17 @@ export class RemoteDataManager extends DataManager {
       })
     })
   }
+
+  delete (entity) {
+    return new Promise((resolve, reject) => {
+      deleteBatch(this.entityName, [entity.id]).then(response => {
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  }
 }
 
 export class LocalDataManager extends DataManager {
-  detail (entity) {
-    this.detailData = entity
-  }
 }

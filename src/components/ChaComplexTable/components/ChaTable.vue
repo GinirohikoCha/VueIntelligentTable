@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { Search, Edit, Delete } from '@element-plus/icons-vue'
 
 export default {
@@ -70,19 +71,36 @@ export default {
     }
   },
   methods: {
+    refresh () {
+      this.loading = true
+      this.dataManager.refresh().then(() => {
+        this.loading = false
+      })
+    },
     handleSelectionChange (selection) {
       this.dataManager.select(selection)
     },
     handleDetail (row) {
       this.dataManager.detail(row)
       this.compManager.openDetailDialog()
+    },
+    handleDelete (row) {
+      ElMessageBox.confirm(
+        '确认删除该数据？',
+        '删除' + (row.name || row.id),
+        { confirmButtonText: '确认', cancelButtonText: '取消', type: 'warning' }
+      ).then(() => {
+        this.dataManager.delete(row).then(response => {
+          ElMessage.success(response.msg || '操作成功')
+          this.refresh()
+        }).catch(error => {
+          ElMessage.error(error.message)
+        })
+      })
     }
   },
   mounted () {
-    this.loading = true
-    this.dataManager.refresh().then(() => {
-      this.loading = false
-    })
+    this.refresh()
   }
 }
 </script>
