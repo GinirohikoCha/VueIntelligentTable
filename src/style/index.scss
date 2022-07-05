@@ -9,7 +9,8 @@ html {
 body {
     margin: 0;
     height: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 /* 去除router-link与a的字体效果与下划线 */

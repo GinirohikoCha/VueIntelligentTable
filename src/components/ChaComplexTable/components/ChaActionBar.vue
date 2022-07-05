@@ -97,7 +97,9 @@ export default {
     handleRefresh () {
       this.compManager.refresh()
     },
-    handleFullScreen () {},
+    handleFullScreen () {
+      this.compManager.fullScreen()
+    },
     handleCreate () {
 
     },

@@ -5,6 +5,8 @@
     v-loading="loading"
     :data="dataManager.data"
     :size="'small'"
+    :max-height="tableHeight"
+    :class="{ 'cha-table-fullScreen': fullScreen }"
     border
     @selection-change="handleSelectionChange">
     <!--  >>> 序号列 Slot <<<  -->
@@ -56,15 +58,13 @@ export default {
   inject: ['dataManager', 'compManager'],
   data () {
     return {
-      loading: false
+      loading: false,
+      fullScreen: false
     }
   },
   computed: {
-    pageSize () {
-      if (this.total <= 100) {
-        return [10, 20, 30, 40, 50, 100]
-      }
-      return [10, 20, 30, 40, 50, 100, this.total]
+    tableHeight () {
+      return 'calc(100vh)'
     },
     actionColumnWidth () {
       return 20 + 3 * 35
@@ -76,6 +76,10 @@ export default {
       this.dataManager.refresh().then(() => {
         this.loading = false
       })
+    },
+    openFullScreen () {
+      this.fullScreen = true
+      ElMessage.info({ message: '按下ESC退出全屏' })
     },
     handleSelectionChange (selection) {
       this.dataManager.select(selection)
@@ -101,6 +105,11 @@ export default {
   },
   mounted () {
     this.refresh()
+    const that = this
+    // 监听全屏按下ESC退出
+    document.onkeydown = (e) => {
+      if (e.key === 'Escape') { that.fullScreen = false }
+    }
   }
 }
 </script>

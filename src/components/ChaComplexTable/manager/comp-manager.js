@@ -17,6 +17,12 @@ export class CompManager {
     }
   }
 
+  fullScreen () {
+    if (this.table) {
+      this.table.openFullScreen()
+    }
+  }
+
   openDetailDialog () {
     if (this.detailDialog) {
       this.detailDialog.openDialog()
