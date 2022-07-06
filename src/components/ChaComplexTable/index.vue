@@ -4,7 +4,7 @@
     <cha-filter
       ref="chaFilter">
       <!--   筛选项   -->
-      <template #filter-items="{collapse, updateOffset}">
+      <template #filter-items="{ collapse, updateOffset }">
         <slot name="filter-items" :collapse="collapse" :updateOffset="updateOffset"/>
       </template>
     </cha-filter>

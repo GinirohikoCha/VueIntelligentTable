@@ -2,10 +2,10 @@
   <div class="filter-container">
     <el-row :gutter="10">
       <!--  >>> 筛选项 Slot <<<  -->
-      <slot name="filter-items" :collpase="collapse" :updateOffset="updateOffset"></slot>
+      <slot name="filter-items" :collapse="collapse" :updateOffset="updateOffset"/>
 
       <!--   筛选项操作按钮   -->
-      <el-col :span="6" :offset="offset" style="margin-top: 5px">
+      <el-col :span="4" :offset="offset" style="margin-top: 5px">
         <el-button class="filter-button" :size="'small'" @click="handleReset">
           <el-icon class="el-icon--left"><RefreshLeft /></el-icon>{{ '重置' }}
         </el-button>
@@ -36,15 +36,15 @@ export default {
   data () {
     return {
       collapse: true,
-      offset: 18
+      offset: 20
     }
   },
   methods: {
     toggleCollapse () {
       this.collapse = !this.collapse
     },
-    updateOffset (filterAmount) {
-      this.offset = (3 - (filterAmount % 4)) * 6
+    updateOffset (filterCol) {
+      this.offset = 20 - filterCol
     },
     handleFilter () {
       this.dataManager.filter()

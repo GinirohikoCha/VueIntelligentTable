@@ -1,5 +1,9 @@
 <template>
   <cha-complex-table :entity-name="'student'" :entity-display-name="'学生'">
+    <template #filter-items="{ collapse, updateOffset }">
+      <filter-items :collapse="collapse" :updateOffset="updateOffset"/>
+    </template>
+
     <template #table-columns>
       <el-table-column label="id" prop="id"></el-table-column>
       <el-table-column label="姓名" prop="name"></el-table-column>
@@ -21,8 +25,8 @@
     </template>
 
     <template #form-dialog-items="{ entityFormData }">
-      <el-form-item label="姓名"><el-input v-model="entityFormData.name"></el-input></el-form-item>
-      <el-form-item label="年龄"><el-input v-model="entityFormData.age"></el-input></el-form-item>
+      <el-form-item label="姓名"><el-input v-model="entityFormData.name"/></el-form-item>
+      <el-form-item label="年龄"><el-input v-model="entityFormData.age"/></el-form-item>
       <el-form-item label="性别">
         <el-select v-model="entityFormData.gender">
           <el-option
@@ -38,10 +42,14 @@
 
 <script>
 import ChaComplexTable from '@/components/ChaComplexTable'
+import FilterItems from '@/views/demo/FilterItems'
 
 export default {
   name: 'Demo',
-  components: { ChaComplexTable },
+  components: {
+    ChaComplexTable,
+    FilterItems
+  },
   props: {
     ChaComplexTable
   }
