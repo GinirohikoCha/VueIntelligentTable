@@ -1,7 +1,11 @@
 <template>
   <cha-complex-table :entity-name="'student'" :entity-display-name="'学生'">
-    <template #filter-items="{ collapse, updateOffset }">
-      <filter-items :collapse="collapse" :updateOffset="updateOffset"/>
+    <template #filter-items="{ collapse, updateOffset, updateQuery, setResetMethod }">
+      <filter-items
+        :collapse="collapse"
+        :updateOffset="updateOffset"
+        :updateQuery="updateQuery"
+        :setResetMethod="setResetMethod"/>
     </template>
 
     <template #table-columns>

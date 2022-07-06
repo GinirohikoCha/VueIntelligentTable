@@ -9,6 +9,8 @@ export class DataManager {
     size: 20
   }
 
+  query = {}
+
   /**
    * 原始数据
    * @type {Array}
@@ -101,12 +103,12 @@ export class DataManager {
     })
   }
 
-  filter () {
-    console.log('filter')
+  filter (query) {
+    this.query = query
   }
 
   reset () {
-    console.log('reset')
+    this.query = {}
   }
 
   select (selection) {
@@ -174,7 +176,7 @@ export class RemoteDataManager extends DataManager {
 
   refresh () {
     return new Promise((resolve, reject) => {
-      list(this.entityName, { page: this.page }).then(response => {
+      list(this.entityName, { page: this.page, query: this.query }).then(response => {
         this.data = response.data.items
         this.total = response.data.total
         switch (this.pageMode) {

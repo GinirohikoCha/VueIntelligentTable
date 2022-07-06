@@ -2,7 +2,12 @@
   <div class="filter-container">
     <el-row :gutter="10">
       <!--  >>> 筛选项 Slot <<<  -->
-      <slot name="filter-items" :collapse="collapse" :updateOffset="updateOffset"/>
+      <slot
+        name="filter-items"
+        :collapse="collapse"
+        :updateOffset="updateOffset"
+        :updateQuery="updateQuery"
+        :setResetMethod="setResetMethod"/>
 
       <!--   筛选项操作按钮   -->
       <el-col :span="4" :offset="offset" style="margin-top: 5px">
@@ -32,11 +37,13 @@ export default {
     ArrowUp,
     ArrowDown
   },
-  inject: ['dataManager'],
+  inject: ['dataManager', 'compManager'],
   data () {
     return {
       collapse: true,
-      offset: 20
+      offset: 20,
+      query: {},
+      reset: undefined
     }
   },
   methods: {
@@ -46,11 +53,22 @@ export default {
     updateOffset (filterCol) {
       this.offset = 20 - filterCol
     },
+    updateQuery (query) {
+      this.query = query
+    },
+    setResetMethod (reset) {
+      this.reset = reset
+    },
     handleFilter () {
-      this.dataManager.filter()
+      this.dataManager.filter(this.query)
+      this.compManager.refresh()
     },
     handleReset () {
+      if (this.reset) {
+        this.reset()
+      }
       this.dataManager.reset()
+      this.compManager.refresh()
     }
   }
 }
