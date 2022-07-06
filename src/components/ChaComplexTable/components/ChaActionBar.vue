@@ -111,7 +111,7 @@ export default {
         { confirmButtonText: '确认', cancelButtonText: '取消', type: 'warning' }
       ).then(() => {
         this.dataManager.deleteBatch(this.selection).then(response => {
-          ElMessage.success(response.msg || '操作成功')
+          ElMessage.success(response.message || '操作成功')
           this.handleRefresh()
         }).catch(error => {
           ElMessage.error(error.message)

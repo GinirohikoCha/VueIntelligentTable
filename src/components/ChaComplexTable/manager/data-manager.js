@@ -2,11 +2,20 @@ import { create, updateBatch, deleteBatch, detail, list } from '../api'
 import _ from 'lodash'
 
 export class DataManager {
+  pageMode = 'remote'
+
+  page = {
+    current: 1,
+    size: 20
+  }
+
   /**
    * 原始数据
    * @type {Array}
    */
   data = []
+
+  displayData = []
 
   /**
    * 数据总数（远程模式时为服务器可查询到的所有数据）
@@ -44,8 +53,50 @@ export class DataManager {
    * */
   editIndex = -1
 
+  constructor (pageMode) {
+    this.pageMode = pageMode
+  }
+
+  sliceData (data) {
+    return data.slice(
+      (this.page.current - 1) * this.page.size, // 当前页首项
+      this.page.current * this.page.size // 下一页首项
+    )
+  }
+
+  turnPage () {
+    return new Promise((resolve, reject) => {
+      switch (this.pageMode) {
+        default:
+        case 'remote':
+          this.refresh()
+            .then(response => resolve(response))
+            .catch(error => reject(error))
+          break
+        case 'local':
+          this.displayData = this.sliceData(this.data)
+          resolve()
+          break
+        case 'disable':
+          this.displayData = this.data
+          resolve()
+          break
+      }
+    })
+  }
+
   refresh () {
     return new Promise((resolve) => {
+      switch (this.pageMode) {
+        default:
+        case 'remote':
+        case 'disable':
+          this.displayData = this.data
+          break
+        case 'local':
+          this.displayData = this.sliceData(this.data)
+          break
+      }
       resolve()
     })
   }
@@ -116,16 +167,26 @@ export class RemoteDataManager extends DataManager {
    */
   entityName
 
-  constructor (entityName) {
-    super()
+  constructor (pageMode, entityName) {
+    super(pageMode)
     this.entityName = entityName
   }
 
   refresh () {
     return new Promise((resolve, reject) => {
-      list(this.entityName, {}).then(response => {
+      list(this.entityName, { page: this.page }).then(response => {
         this.data = response.data.items
         this.total = response.data.total
+        switch (this.pageMode) {
+          default:
+          case 'remote':
+          case 'disable':
+            this.displayData = this.data
+            break
+          case 'local':
+            this.displayData = this.sliceData(this.data)
+            break
+        }
         resolve(response)
       }).catch(error => {
         reject(error)

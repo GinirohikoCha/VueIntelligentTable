@@ -111,7 +111,7 @@ export default {
     create () {
       this.dataManager.create(this.entityFormData).then(response => {
         this.compManager.refresh()
-        ElMessage.success(response.msg)
+        ElMessage.success(response.message)
         this.visible = false
       }).catch(error => {
         ElMessage.error(error.message)
@@ -120,7 +120,7 @@ export default {
     update () {
       this.dataManager.update(this.entityFormData).then(response => {
         this.compManager.refresh()
-        ElMessage.success(response.msg)
+        ElMessage.success(response.message)
         this.visible = false
       }).catch(error => {
         ElMessage.error(error.message)

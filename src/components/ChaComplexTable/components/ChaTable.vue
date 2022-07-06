@@ -3,7 +3,7 @@
     ref="chaTable"
     class="cha-table"
     v-loading="loading"
-    :data="dataManager.data"
+    :data="displayData"
     :size="'small'"
     :max-height="tableHeight"
     :class="{ 'cha-table-fullScreen': fullScreen }"
@@ -42,6 +42,17 @@
       </el-table-column>
     </slot>
   </el-table>
+
+  <el-pagination
+    v-if="this.dataManager.pageMode !== 'disable'"
+    :total="this.dataManager.total"
+    v-model:current-page="current"
+    v-model:page-size="size"
+    layout="total, sizes, prev, pager, next, jumper"
+    class="cha-table-pagination"
+    :page-sizes="pageSizes"
+    @size-change="handlePageChange"
+    @current-change="handlePageChange"/>
 </template>
 
 <script>
@@ -63,6 +74,23 @@ export default {
     }
   },
   computed: {
+    displayData () {
+      return this.dataManager.displayData
+    },
+    current: {
+      get () { return this.dataManager.page.current },
+      set (newValue) { this.dataManager.page.current = newValue }
+    },
+    size: {
+      get () { return this.dataManager.page.size },
+      set (newValue) { this.dataManager.page.size = newValue }
+    },
+    pageSizes () {
+      if (this.dataManager.total <= 100) {
+        return [10, 20, 30, 40, 50, 100]
+      }
+      return [10, 20, 30, 40, 50, 100, this.dataManager.total]
+    },
     tableHeight () {
       return 'calc(100vh)'
     },
@@ -99,11 +127,20 @@ export default {
         { confirmButtonText: '确认', cancelButtonText: '取消', type: 'warning' }
       ).then(() => {
         this.dataManager.delete(row).then(response => {
-          ElMessage.success(response.msg || '操作成功')
+          ElMessage.success(response.message || '操作成功')
           this.refresh()
         }).catch(error => {
           ElMessage.error(error.message)
         })
+      })
+    },
+    handlePageChange () {
+      this.loading = true
+      this.dataManager.turnPage().then(response => {
+        ElMessage.success(response.message)
+        this.loading = false
+      }).catch(error => {
+        ElMessage.error(error.message)
       })
     }
   },

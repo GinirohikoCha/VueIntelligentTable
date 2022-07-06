@@ -81,6 +81,9 @@ export default {
     /** 数据模式 本地模式/远程模式 */
     /** 有效值 'remote', 'local' */
     dataMode: { type: String, default: 'remote' },
+    /** 换页模式 本地模式/远程模式/禁用 */
+    /** 有效值 'remote', 'local', 'disable' */
+    pageMode: { type: String, default: 'remote' },
     /** 在 api.js 中组成CRUD访问路径 */
     entityName: String,
     /** 用来代替 entityName 的显示名称（比如可以用于中文本地化时）
@@ -97,7 +100,7 @@ export default {
   },
   data () {
     return {
-      dataManager: this.dataMode === 'local' ? new LocalDataManager() : new RemoteDataManager(this.entityName),
+      dataManager: this.getDataManager(),
       compManager: new CompManager()
     }
   },
@@ -109,6 +112,15 @@ export default {
       this.$refs.chaDetailDialog,
       this.$refs.chaFormDialog
     )
+  },
+  methods: {
+    getDataManager () {
+      if (this.dataMode === 'local') {
+        return new LocalDataManager(this.pageMode)
+      } else {
+        return new RemoteDataManager(this.pageMode, this.entityName)
+      }
+    }
   }
 }
 </script>

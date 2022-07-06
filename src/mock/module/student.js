@@ -48,7 +48,7 @@ Mock.mock(/mock\/student\/list/, 'post', (request) => {
 
   return {
     code: 200,
-    msg: '操作成功',
+    message: '查询成功',
     data: {
       total: records.length,
       items: page ? records.splice(page.size * (page.current - 1), page.size) : records
@@ -63,7 +63,7 @@ Mock.mock(/mock\/student\/*/, 'get', (request) => {
 
   return {
     code: 200,
-    msg: '操作成功',
+    message: '操作成功',
     data: data.items.find(item => item.id === id)
   }
 })
@@ -75,7 +75,7 @@ Mock.mock(/mock\/student\/create/, 'post', (request) => {
   student.id = Mock.mock('@id')
   data.items.push(student)
 
-  return { code: 200, msg: '添加成功' }
+  return { code: 200, message: '添加成功' }
 })
 
 Mock.mock(/mock\/student\/update/, 'put', (request) => {
@@ -91,7 +91,7 @@ Mock.mock(/mock\/student\/update/, 'put', (request) => {
     }
   }
 
-  return { code: 200, msg: '操作成功' }
+  return { code: 200, message: '操作成功' }
 })
 
 Mock.mock(/mock\/student\/delete/, 'delete', (request) => {
@@ -104,9 +104,9 @@ Mock.mock(/mock\/student\/delete/, 'delete', (request) => {
       data.items.splice(index, 1)
     } else {
       console.error(id, index)
-      return { code: 400, msg: '发生错误' }
+      return { code: 400, message: '发生错误' }
     }
   }
 
-  return { code: 200, msg: '操作成功' }
+  return { code: 200, message: '操作成功' }
 })
