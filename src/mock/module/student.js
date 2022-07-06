@@ -57,6 +57,8 @@ Mock.mock(/mock\/student\/list/, 'post', (request) => {
 })
 
 Mock.mock(/mock\/student\/*/, 'get', (request) => {
+  console.debug('[Mock.mock:mock/student/{id}]')
+  console.debug(request)
   const id = request.url.substring(request.url.lastIndexOf('/') + 1)
 
   return {
@@ -67,9 +69,10 @@ Mock.mock(/mock\/student\/*/, 'get', (request) => {
 })
 
 Mock.mock(/mock\/student\/create/, 'post', (request) => {
+  console.debug('[Mock.mock:mock/student/create]')
+  console.debug(request)
   const student = JSON.parse(request.body)
   student.id = Mock.mock('@id')
-  console.debug(student)
   data.items.push(student)
 
   return { code: 200, msg: '添加成功' }
@@ -77,6 +80,8 @@ Mock.mock(/mock\/student\/create/, 'post', (request) => {
 
 Mock.mock(/mock\/student\/update/, 'put', (request) => {
   const students = JSON.parse(request.body)
+  console.debug('[Mock.mock:mock/student/update]')
+  console.debug(students)
   for (const student of students) {
     const index = data.items.findIndex(item => item.id === student.id)
     if (index >= 0) {
@@ -91,6 +96,8 @@ Mock.mock(/mock\/student\/update/, 'put', (request) => {
 
 Mock.mock(/mock\/student\/delete/, 'delete', (request) => {
   const ids = JSON.parse(request.body)
+  console.debug('[Mock.mock:mock/student/delete]')
+  console.debug(ids)
   for (const id of ids) {
     const index = data.items.findIndex(item => item.id === id)
     if (index >= 0) {
