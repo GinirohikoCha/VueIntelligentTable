@@ -1,4 +1,4 @@
-import { deleteBatch, detail, list } from '../api'
+import { create, deleteBatch, detail, list } from '../api'
 import _ from 'lodash'
 
 export class DataManager {
@@ -26,10 +26,22 @@ export class DataManager {
    */
   detailData = {}
 
+  /**
+   * 创建数据内容
+   * @type {Object}
+   * */
   createData = {}
 
+  /**
+   * 编辑数据内容
+   * @type {Object}
+   * */
   updateData = {}
 
+  /**
+   * 编辑数据所在列表序号
+   * @type {number}
+   * */
   editIndex = -1
 
   refresh () {
@@ -58,6 +70,13 @@ export class DataManager {
   detail (entity) {
     return new Promise((resolve) => {
       this.detailData = entity
+      resolve()
+    })
+  }
+
+  create (entity) {
+    return new Promise(resolve => {
+      this.data.push(entity)
       resolve()
     })
   }
@@ -109,6 +128,17 @@ export class RemoteDataManager extends DataManager {
     return new Promise((resolve, reject) => {
       detail(this.entityName, entity.id).then(response => {
         this.detailData = response.data
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  }
+
+  create (entity) {
+    return new Promise((resolve, reject) => {
+      create(this.entityName, entity).then(response => {
+        this.createData = {}
         resolve(response)
       }).catch(error => {
         reject(error)

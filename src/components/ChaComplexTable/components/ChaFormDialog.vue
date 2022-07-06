@@ -36,7 +36,7 @@ export default {
     create: null,
     update: null
   },
-  inject: ['dataManager'],
+  inject: ['dataManager', 'compManager'],
   data () {
     return {
       visible: false,
@@ -86,18 +86,13 @@ export default {
       if (this.entityFormRules) {
         this.$refs.form.validate((valid) => {
           if (valid) {
-            this.$emit('create', this.entityFormData)
-            this.visible = false
+            this.create()
           } else {
-            ElMessage({
-              message: '表单验证失败',
-              type: 'error'
-            })
+            ElMessage.error('表单验证失败')
           }
         })
       } else {
-        this.$emit('create', this.entityFormData)
-        this.visible = false
+        this.create()
       }
     },
     updateData () {
@@ -112,6 +107,15 @@ export default {
         this.$emit('update', this.entityFormData)
         this.visible = false
       }
+    },
+    create () {
+      this.dataManager.create(this.entityFormData).then(response => {
+        this.compManager.refresh()
+        ElMessage.success(response.msg)
+        this.visible = false
+      }).catch(error => {
+        ElMessage.error(error.message)
+      })
     }
   }
 }
