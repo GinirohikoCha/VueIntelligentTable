@@ -1,5 +1,10 @@
 <template>
-  <cha-complex-table :entity-name="'student'" :entity-display-name="'学生'">
+  <cha-complex-table
+    :entity-name="'student'"
+    :entity-display-name="'学生'"
+    :export-file-name="'学生数据'"
+    :export-header="{ id: 'ID', name: '名称', age: '年龄', gender: '性别' }"
+    :export-options="{ gender: [{ label: '女', value: 0}, { label: '男', value: 1}] }">
     <template #filter-items="{ collapse, updateOffset, updateQuery, setResetMethod }">
       <filter-items
         :collapse="collapse"

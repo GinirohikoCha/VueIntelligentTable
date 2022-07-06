@@ -35,11 +35,11 @@
             <el-icon style="width: 20px; height: 20px"><full-screen @click="handleFullScreen"/></el-icon>
           </div>
         </el-tooltip>
-<!--        <el-tooltip content="下载导入模板">-->
-<!--          <div>-->
-<!--            <el-icon style="width: 20px; height: 20px"><download @click="handleDownloadTemplate"/></el-icon>-->
-<!--          </div>-->
-<!--        </el-tooltip>-->
+        <el-tooltip content="下载导入模板">
+          <div>
+            <el-icon style="width: 20px; height: 20px"><download @click="handleDownloadTemplate"/></el-icon>
+          </div>
+        </el-tooltip>
 <!--        <el-popover-->
 <!--          placement="bottom"-->
 <!--          trigger="hover"-->
@@ -54,18 +54,18 @@
 <!--              v-model:table-display="modelTableDisplay"/>-->
 <!--          </template>-->
 <!--        </el-popover>-->
-        <el-tooltip content="设置">
-          <div>
-            <el-icon style="width: 20px; height: 20px"><set-up @click="handleSetUp"/></el-icon>
-          </div>
-        </el-tooltip>
+<!--        <el-tooltip content="设置">-->
+<!--          <div>-->
+<!--            <el-icon style="width: 20px; height: 20px"><set-up @click="handleSetUp"/></el-icon>-->
+<!--          </div>-->
+<!--        </el-tooltip>-->
       </el-space>
     </div>
   </div>
 </template>
 
 <script>
-import { Plus, Files, Edit, Delete, Refresh, SetUp, FullScreen } from '@element-plus/icons-vue'
+import { Plus, Files, Edit, Delete, Refresh, Download, FullScreen } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 export default {
@@ -77,8 +77,8 @@ export default {
     Delete,
     Refresh,
     // Operation,
-    SetUp,
-    // Download,
+    // SetUp,
+    Download,
     FullScreen
   },
   inject: ['dataManager', 'compManager'],
@@ -103,8 +103,12 @@ export default {
     handleCreate () {
       this.compManager.openCreateDialog()
     },
-    handleExport () {},
-    handleExportBatch () {},
+    handleExport () {
+      this.compManager.export('all')
+    },
+    handleExportBatch () {
+      this.compManager.export('selection')
+    },
     handleDeleteBatch () {
       ElMessageBox.confirm(
         `确认删除这 ${this.selection.length} 项数据？`,
@@ -118,7 +122,9 @@ export default {
         })
       })
     },
-    handleSetUp () {}
+    handleDownloadTemplate () {
+      this.compManager.export('template')
+    }
   }
 }
 </script>

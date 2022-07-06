@@ -25,7 +25,10 @@
 
     <!--  数据表格栏  -->
     <cha-table
-      ref="chaTable">
+      ref="chaTable"
+      :export-file-name="exportFileName"
+      :export-header="exportHeader"
+      :export-options="exportOptions">
       <template #table-index-column>
         <slot name="table-index-column"/>
       </template>
@@ -95,7 +98,11 @@ export default {
      *  未提供时与 entityName 相同 */
     entityDisplayName: String,
     /** 创建/修改时表单验证规则 */
-    entityFormRules: Object
+    entityFormRules: Object,
+    /* >>>>>> Export Props <<<<<< */
+    exportHeader: Object,
+    exportFileName: String,
+    exportOptions: Object
   },
   provide () {
     return {

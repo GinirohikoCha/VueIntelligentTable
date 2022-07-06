@@ -58,6 +58,7 @@
 <script>
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Search, Edit, Delete } from '@element-plus/icons-vue'
+import { exportTemplate } from '../export2Excel'
 
 export default {
   name: 'ChaTable',
@@ -65,6 +66,12 @@ export default {
     Search,
     Edit,
     Delete
+  },
+  props: {
+    /* >>>>>> Export Props <<<<<< */
+    exportFileName: String,
+    exportHeader: Object,
+    exportOptions: Object
   },
   inject: ['dataManager', 'compManager'],
   data () {
@@ -104,6 +111,15 @@ export default {
       this.dataManager.refresh().then(() => {
         this.loading = false
       })
+    },
+    exportAll () {
+      this.dataManager.exportAll(this.exportFileName, this.exportHeader, this.exportOptions)
+    },
+    exportSelection () {
+      this.dataManager.exportSelection(this.exportFileName, this.exportHeader, this.exportOptions)
+    },
+    exportTemplate () {
+      exportTemplate(`${this.exportFileName}模板`, this.exportHeader)
     },
     openFullScreen () {
       this.fullScreen = true

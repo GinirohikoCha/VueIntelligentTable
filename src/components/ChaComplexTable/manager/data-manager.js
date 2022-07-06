@@ -1,4 +1,5 @@
 import { create, updateBatch, deleteBatch, detail, list } from '../api'
+import { export2Excel } from '../export2Excel'
 import _ from 'lodash'
 
 export class DataManager {
@@ -159,6 +160,14 @@ export class DataManager {
       }
       resolve()
     })
+  }
+
+  exportAll (fileName, header, options) {
+    export2Excel(this.data, fileName, header, options)
+  }
+
+  exportSelection (fileName, header, options) {
+    export2Excel(this.selection, fileName, header, options)
   }
 }
 

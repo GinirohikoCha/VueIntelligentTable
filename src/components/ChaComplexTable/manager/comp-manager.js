@@ -42,4 +42,19 @@ export class CompManager {
       this.formDialog.openDialog('update')
     }
   }
+
+  export (type) {
+    switch (type) {
+      default:
+      case 'all':
+        this.table.exportAll()
+        break
+      case 'selection':
+        this.table.exportSelection()
+        break
+      case 'template':
+        this.table.exportTemplate()
+        break
+    }
+  }
 }
