@@ -1,3 +1,4 @@
+import _ from 'lodash'
 const Mock = require('mockjs')
 
 const data = Mock.mock({
@@ -74,11 +75,25 @@ Mock.mock(/mock\/student\/create/, 'post', (request) => {
   return { code: 200, msg: '添加成功' }
 })
 
+Mock.mock(/mock\/student\/update/, 'put', (request) => {
+  const students = JSON.parse(request.body)
+  for (const student of students) {
+    const index = data.items.findIndex(item => item.id === student.id)
+    if (index >= 0) {
+      _.assign(data.items[index], student)
+    } else {
+      console.error(student.id, index)
+    }
+  }
+
+  return { code: 200, msg: '操作成功' }
+})
+
 Mock.mock(/mock\/student\/delete/, 'delete', (request) => {
   const ids = JSON.parse(request.body)
   for (const id of ids) {
     const index = data.items.findIndex(item => item.id === id)
-    if (index || index === 0) {
+    if (index >= 0) {
       data.items.splice(index, 1)
     } else {
       console.error(id, index)

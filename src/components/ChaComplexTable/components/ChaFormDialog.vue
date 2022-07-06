@@ -99,17 +99,26 @@ export default {
       if (this.entityFormRules) {
         this.$refs.form.validate((valid) => {
           if (valid) {
-            this.$emit('update', this.entityFormData)
-            this.visible = false
+            this.update()
+          } else {
+            ElMessage.error('表单验证失败')
           }
         })
       } else {
-        this.$emit('update', this.entityFormData)
-        this.visible = false
+        this.update()
       }
     },
     create () {
       this.dataManager.create(this.entityFormData).then(response => {
+        this.compManager.refresh()
+        ElMessage.success(response.msg)
+        this.visible = false
+      }).catch(error => {
+        ElMessage.error(error.message)
+      })
+    },
+    update () {
+      this.dataManager.update(this.entityFormData).then(response => {
         this.compManager.refresh()
         ElMessage.success(response.msg)
         this.visible = false

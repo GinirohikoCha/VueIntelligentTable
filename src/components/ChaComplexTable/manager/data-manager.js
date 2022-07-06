@@ -1,4 +1,4 @@
-import { create, deleteBatch, detail, list } from '../api'
+import { create, updateBatch, deleteBatch, detail, list } from '../api'
 import _ from 'lodash'
 
 export class DataManager {
@@ -77,6 +77,16 @@ export class DataManager {
   create (entity) {
     return new Promise(resolve => {
       this.data.push(entity)
+      this.createData = {}
+      resolve()
+    })
+  }
+
+  update (entity) {
+    return new Promise(resolve => {
+      _.assign(this.data[this.editIndex], entity)
+      this.editIndex = -1
+      this.updateData = {}
       resolve()
     })
   }
@@ -139,6 +149,18 @@ export class RemoteDataManager extends DataManager {
     return new Promise((resolve, reject) => {
       create(this.entityName, entity).then(response => {
         this.createData = {}
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  }
+
+  update (entity) {
+    return new Promise((resolve, reject) => {
+      updateBatch(this.entityName, [entity]).then(response => {
+        this.editIndex = -1
+        this.updateData = {}
         resolve(response)
       }).catch(error => {
         reject(error)
