@@ -61,9 +61,11 @@
     </template>
     <!--  ChaFormDialog  -->
     <template #form-dialog-items="{ entityData }">
-      <cha-form-items
-        :entity-data="entityData"
-        v-model:select-options="selectOptions"/>
+      <slot name="form-dialog-items" :entityData="entityData">
+        <cha-form-items
+          :entity-data="entityData"
+          v-model:select-options="selectOptions"/>
+      </slot>
     </template>
     <template #form-dialog-footer><slot name="form-dialog-footer"/></template>
   </cha-complex-table>
