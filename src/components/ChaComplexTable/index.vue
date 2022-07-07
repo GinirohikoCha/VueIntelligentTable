@@ -116,6 +116,7 @@ export default {
     crudDeleteMethod: Function,
     detailAction: Function,
     createAction: Function,
+    editAction: Function,
     /* >>>>>> Export Props <<<<<< */
     exportHeader: Object,
     exportFileName: String,
@@ -168,7 +169,11 @@ export default {
       this.$refs.chaDetailDialog,
       this.$refs.chaFormDialog
     )
-    this.compManager.setActions(this.detailAction, this.createAction)
+    this.compManager.setActions(
+      this.detailAction,
+      this.createAction,
+      this.editAction
+    )
     this.dataManager.setCrudMethods(
       this.crudListMethod,
       this.crudDetailMethod,

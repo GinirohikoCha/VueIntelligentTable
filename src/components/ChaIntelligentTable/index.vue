@@ -14,6 +14,7 @@
     :crud-delete-method="crudDeleteMethod"
     :detail-action="detailAction"
     :create-action="createAction"
+    :edit-action="editAction"
     v-model:data="modelData"
     v-model:selection="modelSelection"
     v-model:display-columns="displayColumns">
@@ -104,8 +105,12 @@ export default {
     crudCreateMethod: Function,
     crudUpdateMethod: Function,
     crudDeleteMethod: Function,
+    /** 点击详细查询时动作，默认打开详情窗 */
     detailAction: Function,
+    /** 点击创建时动作，默认打开创建窗 */
     createAction: Function,
+    /** 点击编辑时动作，默认打开编辑窗 */
+    editAction: Function,
     /* >>>>>> v-model Props <<<<<< */
     data: Array,
     selection: Array,

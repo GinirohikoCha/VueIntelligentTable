@@ -16,9 +16,10 @@ export class CompManager {
     this.formDialog = formDialog
   }
 
-  setActions (detailAction, createAction) {
+  setActions (detailAction, createAction, editAction) {
     this.detailAction = detailAction
     this.createAction = createAction
+    this.editAction = editAction
   }
 
   refresh () {
@@ -60,6 +61,10 @@ export class CompManager {
   }
 
   openUpdateDialog () {
+    if (this.editAction) {
+      this.editAction()
+      return
+    }
     if (this.formDialog) {
       this.formDialog.openDialog('update')
     }
