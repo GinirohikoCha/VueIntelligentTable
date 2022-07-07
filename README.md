@@ -1,5 +1,5 @@
 # 猹(?)表 - ChaIntelligentTable
-一款基于 Vue3、Element-plus 组件，通过数组生成后台表格页面的组件
+一款基于 Vue3、Element-plus 组件，通过数组自动生成数据表格页面
 
 （我承认文案有点烂orz）
 
