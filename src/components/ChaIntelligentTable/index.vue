@@ -15,6 +15,9 @@
     :detail-action="detailAction"
     :create-action="createAction"
     :edit-action="editAction"
+    :export-header="exportHeader"
+    :export-file-name="exportFileName || entityDisplayName"
+    :export-options="exportOptions || selectOptions"
     v-model:data="modelData"
     v-model:selection="modelSelection"
     v-model:display-columns="displayColumns">
@@ -111,6 +114,9 @@ export default {
     createAction: Function,
     /** 点击编辑时动作，默认打开编辑窗 */
     editAction: Function,
+    /* >>>>>> Export Props <<<<<< */
+    exportOptions: Object,
+    exportFileName: String,
     /* >>>>>> v-model Props <<<<<< */
     data: Array,
     selection: Array,
@@ -127,6 +133,15 @@ export default {
     }
   },
   computed: {
+    exportHeader () {
+      const exportHeader = {}
+      this.entityForm
+        .filter(column => !column.disable?.export && this.displayColumns[column.name].value)
+        .forEach(item => {
+          exportHeader[item.name] = item.meta?.title || item.name
+        })
+      return exportHeader
+    },
     // v-model
     modelData: {
       get () { return this.data },
