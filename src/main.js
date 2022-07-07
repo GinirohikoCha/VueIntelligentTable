@@ -10,6 +10,10 @@ import './mock'
 // style
 import './style/index.scss'
 
+// ChaIntelligentTable
+import installChaFormComponents from '@/plugins/cha-form-components'
+
 const app = createApp(App)
 installElementPlus(app)
+installChaFormComponents(app)
 app.use(store).use(router).mount('#app')

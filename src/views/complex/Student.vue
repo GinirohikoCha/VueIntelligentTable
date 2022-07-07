@@ -54,7 +54,7 @@
 
 <script>
 import ChaComplexTable from '@/components/ChaComplexTable'
-import FilterItems from '@/views/demo/FilterItems'
+import FilterItems from '@/views/complex/FilterItems'
 
 export default {
   name: 'Demo',

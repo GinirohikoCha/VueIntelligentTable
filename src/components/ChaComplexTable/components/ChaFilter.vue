@@ -42,7 +42,7 @@ export default {
   data () {
     return {
       collapse: true,
-      collapseOn: true,
+      collapseOn: false,
       offset: 20,
       query: {},
       reset: undefined

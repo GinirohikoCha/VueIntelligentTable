@@ -4,7 +4,7 @@
     v-model="visible"
     :title="'详情'">
     <!--  >>> 详情项 Slot <<<  -->
-    <slot name="detail-items" :visible="visible" :close="closeDialog" :entityData="dataManager.detailData"/>
+    <slot name="detail-items" :entityData="this.dataManager.detailData" :visible="visible" :close="closeDialog"/>
   </el-dialog>
 </template>
 

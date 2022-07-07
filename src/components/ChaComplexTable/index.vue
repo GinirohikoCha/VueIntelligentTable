@@ -23,7 +23,9 @@
         <slot name="action-bar-addon-batch" :display="display"></slot>
       </template>
       <template #column-operation-panel>
-        <cha-column-operation-panel v-model:display-columns="modelDisplayColumns"/>
+        <slot name="column-operation-panel">
+          <cha-column-operation-panel v-model:display-columns="modelDisplayColumns"/>
+        </slot>
       </template>
     </cha-action-bar>
 
@@ -50,7 +52,7 @@
     <!--  详情对话框  -->
     <cha-detail-dialog
       ref="chaDetailDialog">
-      <template #detail-items="{ visible, close, entityData }">
+      <template #detail-items="{ entityData, visible, close }">
         <slot name="detail-dialog-items" :entityData="entityData" :visible="visible" :close="close"></slot>
       </template>
     </cha-detail-dialog>
@@ -60,8 +62,8 @@
       ref="chaFormDialog"
       :entity-display-name="entityDisplayName"
       :entity-form-rules="entityFormRules">
-      <template #form-items="{ entityFormData }">
-        <slot name="form-dialog-items" :entityFormData="entityFormData"></slot>
+      <template #form-items="{ entityData }">
+        <slot name="form-dialog-items" :entityData="entityData"></slot>
       </template>
       <template #dialog-footer>
         <slot name="form-dialog-footer"></slot>

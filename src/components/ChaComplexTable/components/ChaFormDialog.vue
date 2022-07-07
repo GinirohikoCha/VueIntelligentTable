@@ -3,9 +3,9 @@
     v-model="visible"
     :title="dialogTitle"
     :width="dialogWidth">
-    <el-form ref="form" :model="entityFormData" :rules="entityFormRules" :label-width="labelWidth">
+    <el-form ref="form" :model="entityData" :rules="entityFormRules" :label-width="labelWidth">
       <!--  >>> 表单项 Slot <<<  -->
-      <slot name="form-items" :entityFormData="entityFormData"></slot>
+      <slot name="form-items" :entityData="entityData"></slot>
     </el-form>
     <template #footer>
       <!--  >>> 底部操作 Slot <<<  -->
@@ -44,7 +44,7 @@ export default {
     }
   },
   computed: {
-    entityFormData () {
+    entityData () {
       switch (this.type) {
         default:
         case 'create':
@@ -109,7 +109,7 @@ export default {
       }
     },
     create () {
-      this.dataManager.create(this.entityFormData).then(response => {
+      this.dataManager.create(this.entityData).then(response => {
         this.compManager.refresh()
         ElMessage.success(response.message)
         this.visible = false
@@ -118,7 +118,7 @@ export default {
       })
     },
     update () {
-      this.dataManager.update(this.entityFormData).then(response => {
+      this.dataManager.update(this.entityData).then(response => {
         this.compManager.refresh()
         ElMessage.success(response.message)
         this.visible = false
