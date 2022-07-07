@@ -3,8 +3,7 @@
     <cha-intelligent-table
       :entity-name="'student'"
       :entity-display-name="'学生'"
-      :entity-form="entityForm">
-    </cha-intelligent-table>
+      :entity-form="entityForm"/>
   </div>
 </template>
 

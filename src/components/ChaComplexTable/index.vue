@@ -107,6 +107,15 @@ export default {
     entityDisplayName: String,
     /** 创建/修改时表单验证规则 */
     entityFormRules: Object,
+    /* >>>>>> CRUD 自定义方法相关 <<<<<< */
+    crudListMethod: Function,
+    crudDetailMethod: Function,
+    crudSelectMethod: Function,
+    crudCreateMethod: Function,
+    crudUpdateMethod: Function,
+    crudDeleteMethod: Function,
+    detailAction: Function,
+    createAction: Function,
     /* >>>>>> Export Props <<<<<< */
     exportHeader: Object,
     exportFileName: String,
@@ -158,6 +167,14 @@ export default {
       this.$refs.chaTable,
       this.$refs.chaDetailDialog,
       this.$refs.chaFormDialog
+    )
+    this.compManager.setActions(this.detailAction, this.createAction)
+    this.dataManager.setCrudMethods(
+      this.crudListMethod,
+      this.crudDetailMethod,
+      this.crudCreateMethod,
+      this.crudUpdateMethod,
+      this.crudDeleteMethod
     )
     if (this.data) {
       this.dataManager.data = this.data

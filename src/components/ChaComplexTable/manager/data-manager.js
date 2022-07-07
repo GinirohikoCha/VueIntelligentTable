@@ -60,6 +60,14 @@ export class DataManager {
     this.pageMode = pageMode
   }
 
+  setCrudMethods (list, detail, create, updateBatch, deleteBatch) {
+    this.crudListMethod = list
+    this.crudDetailMethod = detail
+    this.crudCreateMthod = create
+    this.crudUpdateMethod = updateBatch
+    this.crudDeleteMethod = deleteBatch
+  }
+
   sliceData (data) {
     return data.slice(
       (this.page.current - 1) * this.page.size, // 当前页首项
@@ -185,7 +193,9 @@ export class RemoteDataManager extends DataManager {
 
   refresh () {
     return new Promise((resolve, reject) => {
-      list(this.entityName, { page: this.page, query: this.query }).then(response => {
+      const listMethod = this.crudListMethod || list
+
+      listMethod(this.entityName, { page: this.page, query: this.query }).then(response => {
         this.data = response.data.items
         this.total = response.data.total
         switch (this.pageMode) {
@@ -206,9 +216,11 @@ export class RemoteDataManager extends DataManager {
   }
 
   detail (entity) {
+    const detailMethod = this.crudDetailMethod || detail
     this.detailData = entity
+
     return new Promise((resolve, reject) => {
-      detail(this.entityName, entity.id).then(response => {
+      detailMethod(this.entityName, entity.id).then(response => {
         this.detailData = response.data
         resolve(response)
       }).catch(error => {
@@ -218,8 +230,10 @@ export class RemoteDataManager extends DataManager {
   }
 
   create (entity) {
+    const createMethod = this.crudCreateMthod || create
+
     return new Promise((resolve, reject) => {
-      create(this.entityName, entity).then(response => {
+      createMethod(this.entityName, entity).then(response => {
         this.createData = {}
         resolve(response)
       }).catch(error => {
@@ -229,8 +243,10 @@ export class RemoteDataManager extends DataManager {
   }
 
   update (entity) {
+    const updateMethod = this.crudUpdateMethod || updateBatch
+
     return new Promise((resolve, reject) => {
-      updateBatch(this.entityName, [entity]).then(response => {
+      updateMethod(this.entityName, [entity]).then(response => {
         this.editIndex = -1
         this.updateData = {}
         resolve(response)
@@ -241,8 +257,10 @@ export class RemoteDataManager extends DataManager {
   }
 
   delete (entity) {
+    const deleteMethod = this.crudDeleteMethod || deleteBatch
+
     return new Promise((resolve, reject) => {
-      deleteBatch(this.entityName, [entity.id]).then(response => {
+      deleteMethod(this.entityName, [entity.id]).then(response => {
         resolve(response)
       }).catch(error => {
         reject(error)
@@ -251,9 +269,11 @@ export class RemoteDataManager extends DataManager {
   }
 
   deleteBatch (entities) {
+    const deleteMethod = this.crudDeleteMethod || deleteBatch
+
     return new Promise((resolve, reject) => {
       const ids = entities.map(item => { return item.id })
-      deleteBatch(this.entityName, ids).then(response => {
+      deleteMethod(this.entityName, ids).then(response => {
         resolve(response)
       }).catch(error => {
         reject(error)

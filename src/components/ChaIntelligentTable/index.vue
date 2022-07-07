@@ -6,6 +6,14 @@
     :entity-form-rules="entityFormRules"
     :data-mode="dataMode"
     :page-mode="pageMode"
+    :crud-list-method="crudListMethod"
+    :crud-detail-method="crudDetailMethod"
+    :crud-select-method="crudSelectMethod"
+    :crud-create-method="crudCreateMethod"
+    :crud-update-method="crudUpdateMethod"
+    :crud-delete-method="crudDeleteMethod"
+    :detail-action="detailAction"
+    :create-action="createAction"
     v-model:data="modelData"
     v-model:selection="modelSelection"
     v-model:display-columns="displayColumns">
@@ -89,6 +97,15 @@ export default {
     entityDisplayName: String,
     /** 实体字段配置项 */
     entityForm: { type: Array, data () { return [] } },
+    /* >>>>>> CRUD 自定义方法相关 <<<<<< */
+    crudListMethod: Function,
+    crudDetailMethod: Function,
+    crudSelectMethod: Function,
+    crudCreateMethod: Function,
+    crudUpdateMethod: Function,
+    crudDeleteMethod: Function,
+    detailAction: Function,
+    createAction: Function,
     /* >>>>>> v-model Props <<<<<< */
     data: Array,
     selection: Array,
@@ -150,7 +167,9 @@ export default {
           if (column.meta?.options) {
             this.selectOptions[column.name] = column.meta.options
           } else if (column.meta?.link) {
-            select(column.meta.link, {}).then(response => {
+            const selectMethod = this.crudSelectMethod || select
+
+            selectMethod(column.meta.link, {}).then(response => {
               this.selectOptions[column.name] = response.data.items
             })
           } else if (column.meta?.optionsMethod) {

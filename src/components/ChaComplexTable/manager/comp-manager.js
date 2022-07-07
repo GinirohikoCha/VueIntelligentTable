@@ -5,12 +5,20 @@ export class CompManager {
   detailDialog
   formDialog
 
+  detailAction
+  createAction
+
   setComps (filter, actionBar, table, detailDialog, formDialog) {
     this.filter = filter
     this.actionBar = actionBar
     this.table = table
     this.detailDialog = detailDialog
     this.formDialog = formDialog
+  }
+
+  setActions (detailAction, createAction) {
+    this.detailAction = detailAction
+    this.createAction = createAction
   }
 
   refresh () {
@@ -32,12 +40,20 @@ export class CompManager {
   }
 
   openDetailDialog () {
+    if (this.detailAction) {
+      this.detailAction()
+      return
+    }
     if (this.detailDialog) {
       this.detailDialog.openDialog()
     }
   }
 
   openCreateDialog () {
+    if (this.createAction) {
+      this.createAction()
+      return
+    }
     if (this.formDialog) {
       this.formDialog.openDialog('create')
     }
