@@ -12,9 +12,9 @@
           <el-button v-if="hasSelection" type="primary" size="small" @click="handleExportBatch">
             <el-icon class="el-icon--left"><files/></el-icon>{{ `批量导出 ${selection.length} 项` }}
           </el-button>
-          <el-button v-if="hasSelection" type="primary" size="small" @click="visible=true">
-            <el-icon class="el-icon--left"><edit/></el-icon>{{ `批量修改 ${selection.length} 项` }}
-          </el-button>
+<!--          <el-button v-if="hasSelection" type="primary" size="small" @click="visible=true">-->
+<!--            <el-icon class="el-icon&#45;&#45;left"><edit/></el-icon>{{ `批量修改 ${selection.length} 项` }}-->
+<!--          </el-button>-->
           <el-button v-if="hasSelection" type="danger" size="small" @click="handleDeleteBatch">
             <el-icon class="el-icon--left"><delete/></el-icon>{{ `批量删除 ${selection.length} 项` }}
           </el-button>
@@ -40,20 +40,17 @@
             <el-icon style="width: 20px; height: 20px"><download @click="handleDownloadTemplate"/></el-icon>
           </div>
         </el-tooltip>
-<!--        <el-popover-->
-<!--          placement="bottom"-->
-<!--          trigger="hover"-->
-<!--          title="列项开关">-->
-<!--          <template #reference>-->
-<!--            <div>-->
-<!--              <el-icon style="width: 20px; height: 20px"><operation/></el-icon>-->
-<!--            </div>-->
-<!--          </template>-->
-<!--          <template #default>-->
-<!--            <cha-column-operation-panel-->
-<!--              v-model:table-display="modelTableDisplay"/>-->
-<!--          </template>-->
-<!--        </el-popover>-->
+        <el-popover
+          placement="bottom"
+          trigger="hover"
+          title="列项开关">
+          <template #reference>
+            <div><el-icon style="width: 20px; height: 20px"><operation/></el-icon></div>
+          </template>
+          <template #default>
+            <slot name="column-operation-panel"/>
+          </template>
+        </el-popover>
 <!--        <el-tooltip content="设置">-->
 <!--          <div>-->
 <!--            <el-icon style="width: 20px; height: 20px"><set-up @click="handleSetUp"/></el-icon>-->
@@ -65,7 +62,7 @@
 </template>
 
 <script>
-import { Plus, Files, Edit, Delete, Refresh, Download, FullScreen } from '@element-plus/icons-vue'
+import { Plus, Files, Delete, Refresh, Operation, Download, FullScreen } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 export default {
@@ -73,10 +70,10 @@ export default {
   components: {
     Plus,
     Files,
-    Edit,
+    // Edit,
     Delete,
     Refresh,
-    // Operation,
+    Operation,
     // SetUp,
     Download,
     FullScreen

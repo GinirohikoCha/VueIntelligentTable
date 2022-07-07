@@ -21,6 +21,9 @@
       <template #action-bar-addon-batch="{ display }">
         <slot name="action-bar-addon-batch" :display="display"></slot>
       </template>
+      <template #column-operation-panel>
+        <cha-column-operation-panel v-model:display-columns="modelDisplayColumns"/>
+      </template>
     </cha-action-bar>
 
     <!--  数据表格栏  -->
@@ -72,6 +75,7 @@ import ChaActionBar from './components/ChaActionBar'
 import ChaTable from './components/ChaTable'
 import ChaDetailDialog from './components/ChaDetailDialog'
 import ChaFormDialog from './components/ChaFormDialog'
+import ChaColumnOperationPanel from './components/ChaColumnOperationPanel'
 import { RemoteDataManager, LocalDataManager } from './manager/data-manager'
 import { CompManager } from './manager/comp-manager'
 
@@ -82,7 +86,8 @@ export default {
     ChaActionBar,
     ChaTable,
     ChaDetailDialog,
-    ChaFormDialog
+    ChaFormDialog,
+    ChaColumnOperationPanel
   },
   props: {
     /* >>>>>> General Props <<<<<< */
@@ -102,7 +107,10 @@ export default {
     /* >>>>>> Export Props <<<<<< */
     exportHeader: Object,
     exportFileName: String,
-    exportOptions: Object
+    exportOptions: Object,
+    /* >>>>>> v-model Props <<<<<< */
+    /** Table显示列切换 */
+    displayColumns: Object
   },
   provide () {
     return {
@@ -114,6 +122,12 @@ export default {
     return {
       dataManager: this.getDataManager(),
       compManager: new CompManager()
+    }
+  },
+  computed: {
+    modelDisplayColumns: {
+      get () { return this.displayColumns },
+      set (newValue) { this.$emit('update:displayColumns', newValue) }
     }
   },
   mounted () {
