@@ -4,10 +4,11 @@
     <cha-filter
       ref="chaFilter">
       <!--   筛选项   -->
-      <template #filter-items="{ collapse, updateOffset, updateQuery, setResetMethod }">
+      <template #filter-items="{ collapse, enableCollapse, updateOffset, updateQuery, setResetMethod }">
         <slot
           name="filter-items"
           :collapse="collapse"
+          :enableCollapse="enableCollapse"
           :updateOffset="updateOffset"
           :updateQuery="updateQuery"
           :setResetMethod="setResetMethod"/>
@@ -109,6 +110,8 @@ export default {
     exportFileName: String,
     exportOptions: Object,
     /* >>>>>> v-model Props <<<<<< */
+    data: Array,
+    selection: Array,
     /** Table显示列切换 */
     displayColumns: Object
   },
@@ -128,6 +131,22 @@ export default {
     modelDisplayColumns: {
       get () { return this.displayColumns },
       set (newValue) { this.$emit('update:displayColumns', newValue) }
+    },
+    modelData: {
+      get () { return this.data },
+      set (newValue) { this.$emit('update:data', newValue) }
+    },
+    modelSelection: {
+      get () { return this.selection },
+      set (newValue) { this.$emit('update:selection', newValue) }
+    }
+  },
+  watch: {
+    'this.dataManager.data' (newValue) {
+      this.modelData = newValue
+    },
+    'this.dataManager.selection' (newValue) {
+      this.modelSelection = newValue
     }
   },
   mounted () {
@@ -138,8 +157,19 @@ export default {
       this.$refs.chaDetailDialog,
       this.$refs.chaFormDialog
     )
+    if (this.data) {
+      this.dataManager.data = this.data
+    }
   },
   methods: {
+    /* >>>>>> For Outer Methods <<<<<< */
+    refresh () {
+      this.compManager.refresh()
+    },
+    select (rows) {
+      this.compManager.select(rows)
+    },
+    /* >>>>>> Internal Methods <<<<<< */
     getDataManager () {
       if (this.dataMode === 'local') {
         return new LocalDataManager(this.pageMode)

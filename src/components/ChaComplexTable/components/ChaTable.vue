@@ -112,6 +112,9 @@ export default {
         this.loading = false
       })
     },
+    select (rows) {
+      this.$refs.chaTable.toggleRowSelection(rows, true)
+    },
     exportAll () {
       this.dataManager.exportAll(this.exportFileName, this.exportHeader, this.exportOptions)
     },

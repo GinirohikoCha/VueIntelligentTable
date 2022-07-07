@@ -5,12 +5,13 @@
       <slot
         name="filter-items"
         :collapse="collapse"
+        :enableCollapse="enableCollapse"
         :updateOffset="updateOffset"
         :updateQuery="updateQuery"
         :setResetMethod="setResetMethod"/>
 
       <!--   筛选项操作按钮   -->
-      <el-col :span="4" :offset="offset" style="margin-top: 5px">
+      <el-col v-if="collapseOn" :span="4" :offset="offset" style="margin-top: 5px">
         <el-button class="filter-button" :size="'small'" @click="handleReset">
           <el-icon class="el-icon--left"><RefreshLeft /></el-icon>{{ '重置' }}
         </el-button>
@@ -41,6 +42,7 @@ export default {
   data () {
     return {
       collapse: true,
+      collapseOn: true,
       offset: 20,
       query: {},
       reset: undefined
@@ -49,6 +51,9 @@ export default {
   methods: {
     toggleCollapse () {
       this.collapse = !this.collapse
+    },
+    enableCollapse (bool) {
+      this.collapseOn = bool
     },
     updateOffset (filterCol) {
       this.offset = 20 - filterCol

@@ -19,6 +19,12 @@ export class CompManager {
     }
   }
 
+  select (rows) {
+    if (this.table) {
+      this.table.select(rows)
+    }
+  }
+
   fullScreen () {
     if (this.table) {
       this.table.openFullScreen()
