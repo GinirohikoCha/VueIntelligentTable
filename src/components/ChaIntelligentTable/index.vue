@@ -18,6 +18,7 @@
     :export-header="exportHeader"
     :export-file-name="exportFileName || entityDisplayName"
     :export-options="exportOptions || selectOptions"
+    :settings="settings"
     v-model:data="modelData"
     v-model:selection="modelSelection"
     v-model:display-columns="displayColumns">
@@ -123,7 +124,9 @@ export default {
     data: Array,
     selection: Array,
     /* >>>>>> Optional Props <<<<<< */
-    detailTabs: Array
+    detailTabs: Array,
+    /* >>>>>> 设置 <<<<<< */
+    settings: Object
   },
   emits: {
     'update:data': null,

@@ -29,13 +29,13 @@
       <!--   默认表格操作列   -->
       <el-table-column :fixed="'right'" :label="'操作'" align="center" :width="actionColumnWidth" class-name="small-padding fixed-width">
         <template v-slot="{row}">
-          <el-button type="success" :size="'small'" @click="handleDetail(row)" style="min-width: 0">
+          <el-button v-if="this.settingManager.settings.general.detail" type="success" :size="'small'" @click="handleDetail(row)" style="min-width: 0">
             <el-icon><Search /></el-icon>
           </el-button>
-          <el-button type="primary" :size="'small'" @click="handleUpdate(row)" style="min-width: 0">
+          <el-button v-if="this.settingManager.settings.general.update" type="primary" :size="'small'" @click="handleUpdate(row)" style="min-width: 0">
             <el-icon><Edit /></el-icon>
           </el-button>
-          <el-button type="danger" :size="'small'" @click="handleDelete(row)" style="min-width: 0">
+          <el-button v-if="this.settingManager.settings.general.delete" type="danger" :size="'small'" @click="handleDelete(row)" style="min-width: 0">
             <el-icon><Delete /></el-icon>
           </el-button>
         </template>
@@ -73,7 +73,7 @@ export default {
     exportHeader: Object,
     exportOptions: Object
   },
-  inject: ['dataManager', 'compManager'],
+  inject: ['dataManager', 'compManager', 'settingManager'],
   data () {
     return {
       loading: false,
@@ -102,7 +102,8 @@ export default {
       return 'calc(100vh)'
     },
     actionColumnWidth () {
-      return 20 + 3 * 35
+      const general = this.settingManager.settings.general
+      return 20 + (general.detail + general.update + general.delete) * 35
     }
   },
   methods: {

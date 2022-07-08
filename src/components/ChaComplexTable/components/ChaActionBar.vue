@@ -2,20 +2,20 @@
   <div class="cha-action-bar-container">
     <div class="action-button-container">
       <el-space>
-        <el-button type="primary" size="small" @click="handleCreate">
+        <el-button v-if="this.settingManager.settings.general.create" type="primary" size="small" @click="handleCreate">
           <el-icon class="el-icon--left"><plus/></el-icon>{{ `添加${entityDisplayName ?? '数据'}` }}
         </el-button>
-        <el-button type="primary" size="small" @click="handleExport">
+        <el-button v-if="this.settingManager.settings.general.export" type="primary" size="small" @click="handleExport">
           <el-icon class="el-icon--left"><files/></el-icon>{{ '全部导出' }}
         </el-button>
         <transition-group name="fade">
-          <el-button v-if="hasSelection" type="primary" size="small" @click="handleExportBatch">
+          <el-button v-if="this.settingManager.settings.general.export && hasSelection" type="primary" size="small" @click="handleExportBatch">
             <el-icon class="el-icon--left"><files/></el-icon>{{ `批量导出 ${selection.length} 项` }}
           </el-button>
 <!--          <el-button v-if="hasSelection" type="primary" size="small" @click="visible=true">-->
 <!--            <el-icon class="el-icon&#45;&#45;left"><edit/></el-icon>{{ `批量修改 ${selection.length} 项` }}-->
 <!--          </el-button>-->
-          <el-button v-if="hasSelection" type="danger" size="small" @click="handleDeleteBatch">
+          <el-button v-if="this.settingManager.settings.general.delete && hasSelection" type="danger" size="small" @click="handleDeleteBatch">
             <el-icon class="el-icon--left"><delete/></el-icon>{{ `批量删除 ${selection.length} 项` }}
           </el-button>
           <slot name="action-bar-addon-batch" :display="hasSelection"></slot>
@@ -35,7 +35,7 @@
             <el-icon style="width: 20px; height: 20px"><full-screen @click="handleFullScreen"/></el-icon>
           </div>
         </el-tooltip>
-        <el-tooltip content="下载导入模板">
+        <el-tooltip v-if="this.settingManager.settings.general.export" content="下载导入模板">
           <div>
             <el-icon style="width: 20px; height: 20px"><download @click="handleDownloadTemplate"/></el-icon>
           </div>
@@ -78,7 +78,7 @@ export default {
     Download,
     FullScreen
   },
-  inject: ['dataManager', 'compManager'],
+  inject: ['dataManager', 'compManager', 'settingManager'],
   props: {
     entityDisplayName: String
   },

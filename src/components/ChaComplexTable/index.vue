@@ -2,6 +2,7 @@
   <div class="complex-table-container">
     <!--  条件筛选栏  -->
     <cha-filter
+      v-if="settingManager.settings.general.filter"
       ref="chaFilter">
       <!--   筛选项   -->
       <template #filter-items="{ collapse, enableCollapse, updateOffset, updateQuery, setResetMethod }">
@@ -17,6 +18,7 @@
 
     <!--  表格操作栏  -->
     <cha-action-bar
+      v-if="settingManager.settings.general.filter"
       ref="chaActionBar"
       :entity-display-name="entityDisplayName">
       <template #action-bar-addon-batch="{ display }">
@@ -51,6 +53,7 @@
 
     <!--  详情对话框  -->
     <cha-detail-dialog
+      v-if="settingManager.settings.general.detail"
       ref="chaDetailDialog">
       <template #detail-items="{ entityData, visible, close }">
         <slot name="detail-dialog-items" :entityData="entityData" :visible="visible" :close="close"></slot>
@@ -59,6 +62,7 @@
 
     <!--  数据操作对话框  -->
     <cha-form-dialog
+      v-if="settingManager.settings.general.form"
       ref="chaFormDialog"
       :entity-display-name="entityDisplayName"
       :entity-form-rules="entityFormRules">
@@ -81,6 +85,7 @@ import ChaFormDialog from './components/ChaFormDialog'
 import ChaColumnOperationPanel from './components/ChaColumnOperationPanel'
 import { RemoteDataManager, LocalDataManager } from './manager/data-manager'
 import { CompManager } from './manager/comp-manager'
+import { SettingManager } from './manager/setting-manager'
 
 export default {
   name: 'ChaComplexTable',
@@ -125,18 +130,22 @@ export default {
     data: Array,
     selection: Array,
     /** Table显示列切换 */
-    displayColumns: Object
+    displayColumns: Object,
+    /* >>>>>> 设置 <<<<<< */
+    settings: Object
   },
   provide () {
     return {
       dataManager: this.dataManager,
-      compManager: this.compManager
+      compManager: this.compManager,
+      settingManager: this.settingManager
     }
   },
   data () {
     return {
       dataManager: this.getDataManager(),
-      compManager: new CompManager()
+      compManager: new CompManager(),
+      settingManager: new SettingManager(this.settings)
     }
   },
   computed: {
