@@ -167,6 +167,7 @@ export default {
   mounted () {
     this.initDisplayColumns()
     this.initSelectOptions()
+    this.initFormRules()
   },
   methods: {
     /* >>>>>> For Outer Methods <<<<<< */
@@ -202,6 +203,20 @@ export default {
           }
         }
       })
+    },
+    /** 生成FormDialog中表单的rules要求 */
+    initFormRules () {
+      this.entityFormRules = {}
+      // TODO custom validator
+      this.entityForm
+        .filter(column => column.required && !(column.disable?.all || column.disable?.form))
+        .forEach(column => {
+          this.entityFormRules[column.name] = {
+            required: true,
+            message: '未输入' + column.meta?.title,
+            trigger: 'blur'
+          }
+        })
     }
   }
 }
