@@ -138,7 +138,7 @@ export default {
     exportHeader () {
       const exportHeader = {}
       this.entityForm
-        .filter(column => !column.disable?.export && this.displayColumns[column.name].value)
+        .filter(column => !column.disable?.export && this.displayColumns[column.name]?.value)
         .forEach(item => {
           exportHeader[item.name] = item.meta?.title || item.name
         })
