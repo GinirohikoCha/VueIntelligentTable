@@ -39,7 +39,7 @@ export default {
       set (newValue) { this.$emit('update:selectOptions', newValue) }
     },
     detailItems () {
-      return this.entityForm.filter(column => !(column.disable && (column.disable.all || column.disable.detail)))
+      return this.entityForm.filter(column => !(column.disable?.all || column.disable?.detail))
     }
   },
   methods: {

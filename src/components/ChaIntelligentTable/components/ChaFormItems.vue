@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     formItems () {
-      return this.entityForm.filter(column => !(column.disable && (column.disable.all || column.disable.form)))
+      return this.entityForm.filter(column => !(column.disable?.all || column.disable?.form))
     },
     modelEntityData: {
       get () { return this.entityData },
