@@ -11,14 +11,14 @@
         :setResetMethod="setResetMethod"/>
 
       <!--   筛选项操作按钮   -->
-      <el-col v-if="collapseOn" :span="4" :offset="offset" style="margin-top: 5px">
+      <el-col :span="4" :offset="offset" style="margin-top: 5px">
         <el-button class="filter-button" :size="'small'" @click="handleReset">
           <el-icon class="el-icon--left"><RefreshLeft /></el-icon>{{ '重置' }}
         </el-button>
         <el-button class="filter-button" :size="'small'" type="primary" @click="handleFilter">
           <el-icon class="el-icon--left"><Search /></el-icon>{{ '查询' }}
         </el-button>
-        <el-button class="filter-button" :size="'small'" type="primary" text @click="toggleCollapse">
+        <el-button v-if="collapseOn" class="filter-button" :size="'small'" type="primary" text @click="toggleCollapse">
           <el-icon class="el-icon--left"><component :is="collapse ? 'ArrowDown' : 'ArrowUp'" /></el-icon>
           {{ collapse ? '展开' : '收起' }}
         </el-button>

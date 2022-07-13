@@ -161,7 +161,7 @@ export default {
     return {
       displayColumns: {},
       entityFormRules: [],
-      selectOptions: []
+      selectOptions: {}
     }
   },
   mounted () {

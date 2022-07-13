@@ -18,7 +18,7 @@
     </el-option>
   </el-select>
 
-  <span v-else :style="{color: formData[meta.color] }">{{ displayText }}</span>
+  <span v-else :style="{color: formData[meta?.color] }">{{ displayText }}</span>
 </template>
 
 <script>
@@ -36,7 +36,7 @@ export default {
       type: String,
       default: 'Input'
     },
-    selectOptions: null
+    selectOptions: Object
   },
   emits: {
     visibleChange: null,
