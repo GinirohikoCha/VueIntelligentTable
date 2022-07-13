@@ -7,7 +7,7 @@
     <template v-if="meta?.unitName" #append>{{ meta.unitName }}</template>
   </el-input>
 
-  <span v-else>{{ modelValue }} {{ modelValue ? meta.unitName : null }}</span>
+  <span v-else>{{ modelValue }} {{ modelValue ? meta?.unitName : null }}</span>
 </template>
 
 <script>

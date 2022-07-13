@@ -179,7 +179,8 @@ export default {
     },
     /* >>>>>> Internal Methods <<<<<< */
     initDisplayColumns () {
-      for (const column of this.entityForm) {
+      const columns = this.entityForm.filter(column => !(column.disable?.all || column.disable?.table))
+      for (const column of columns) {
         this.displayColumns[column.name] = {
           label: column.meta?.title ?? column.name,
           value: !column.hide

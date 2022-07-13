@@ -58,7 +58,7 @@ export default {
       set (newValue) { this.$emit('update:selectOptions', newValue) }
     },
     displayText () {
-      if (this.formData && this.modelMeta.alias && this.formData[this.modelMeta.alias]) {
+      if (this.formData && this.modelMeta?.alias && this.formData[this.modelMeta?.alias]) {
         return this.formData[this.modelMeta.alias]
       }
       const option = this.displayOptions.find(item => item.value === this.value)
@@ -68,7 +68,7 @@ export default {
       if (this.modelSelectOptions && this.modelSelectOptions[this.form?.name]) {
         return this.modelSelectOptions[this.form?.name]
       }
-      if (this.modelMeta.alias && this.formData) {
+      if (this.modelMeta?.alias && this.formData) {
         return [{ label: this.formData[this.modelMeta.alias], value: this.modelValue }]
       }
       return []
@@ -84,11 +84,11 @@ export default {
       if (!this.modelSelectOptions) {
         this.modelSelectOptions = {}
       }
-      if (this.modelMeta.optionsMethod) {
-        this.modelSelectOptions[this.form.name] = this.modelMeta.optionsMethod()
+      if (this.modelMeta?.optionsMethod) {
+        this.modelSelectOptions[this.form?.name] = this.modelMeta.optionsMethod()
       } else if (this.modelMeta.link) {
-        select(this.modelMeta.link, {}).then(response => {
-          this.modelSelectOptions[this.form.name] = response.data.items
+        select(this.modelMeta?.link, {}).then(response => {
+          this.modelSelectOptions[this.form?.name] = response.data.items
         }).catch(error => {
           ElMessage.error(error.message)
         })

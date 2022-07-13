@@ -6,7 +6,7 @@
     :prop="tableColumn.name"
     :label="tableColumn.meta?.title"
     :width="tableColumn.meta?.width"
-    :sortable="tableColumn.meta.sortable"
+    :sortable="tableColumn.meta?.sortable"
     :filters="filters[tableColumn.name]"
     :filter-method="getFilterMethod(tableColumn)">
     <template v-slot="{row}">

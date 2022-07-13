@@ -7,6 +7,7 @@
     :size="'small'"
     :max-height="tableHeight"
     :class="{ 'cha-table-fullScreen': fullScreen }"
+    :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
     border
     @selection-change="handleSelectionChange">
     <!--  >>> 序号列 Slot <<<  -->
