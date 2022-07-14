@@ -158,7 +158,7 @@ export default {
     handlePageChange () {
       this.loading = true
       this.dataManager.turnPage().then(response => {
-        ElMessage.success(response.message)
+        ElMessage.success('查询成功')
         this.loading = false
       }).catch(error => {
         ElMessage.error(error.message)

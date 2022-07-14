@@ -177,6 +177,9 @@ export default {
     select (rows) {
       this.$refs.chaComplexTable.select(rows)
     },
+    getDataManager () {
+      return this.$refs.chaComplexTable.getDataManager()
+    },
     /* >>>>>> Internal Methods <<<<<< */
     initDisplayColumns () {
       const columns = this.entityForm.filter(column => !(column.disable?.all || column.disable?.table))

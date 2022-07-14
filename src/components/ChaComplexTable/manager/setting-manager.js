@@ -14,6 +14,10 @@ const DEFAULT_SETTINGS = {
   table: {
     selectable: true,
     resultMessage: true
+  },
+  form: {
+    labelWidth: '80px',
+    dialogWidth: '50%'
   }
 }
 

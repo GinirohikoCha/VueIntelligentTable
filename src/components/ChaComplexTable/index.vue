@@ -143,7 +143,7 @@ export default {
   },
   data () {
     return {
-      dataManager: this.getDataManager(),
+      dataManager: this.newDataManager(),
       compManager: new CompManager(),
       settingManager: new SettingManager(this.settings)
     }
@@ -202,8 +202,11 @@ export default {
     select (rows) {
       this.compManager.select(rows)
     },
-    /* >>>>>> Internal Methods <<<<<< */
     getDataManager () {
+      return this.dataManager
+    },
+    /* >>>>>> Internal Methods <<<<<< */
+    newDataManager () {
       if (this.dataMode === 'local') {
         return new LocalDataManager(this.pageMode)
       } else {

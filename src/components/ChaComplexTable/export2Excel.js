@@ -1,4 +1,4 @@
-import XLSX from 'xlsx'
+import xlsx from 'xlsx'
 import FileSaver from 'file-saver'
 
 export function export2Excel (data, filename, header, options) {
@@ -50,10 +50,10 @@ export function exportTemplate (filename, header) {
 }
 
 function exportFile (exportData, headerKeys, filename) {
-  const book = XLSX.utils.book_new()
-  const bookSheet = XLSX.utils.json_to_sheet(exportData, { header: headerKeys, skipHeader: true })
-  XLSX.utils.book_append_sheet(book, bookSheet)
-  const bookOut = XLSX.write(book, { bookType: 'xlsx', bookSST: true, type: 'array' })
+  const book = xlsx.utils.book_new()
+  const bookSheet = xlsx.utils.json_to_sheet(exportData, { header: headerKeys, skipHeader: true })
+  xlsx.utils.book_append_sheet(book, bookSheet)
+  const bookOut = xlsx.write(book, { bookType: 'xlsx', bookSST: true, type: 'array' })
   // 调取浏览器文件下载
   try {
     FileSaver.saveAs(new Blob([bookOut], { type: 'application/octet-stream' }), filename + '.xlsx')

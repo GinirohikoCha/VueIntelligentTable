@@ -27,16 +27,13 @@ export default {
   name: 'ChaFormDialog',
   props: {
     entityDisplayName: String,
-    entityFormRules: Object,
-    // 外观参数
-    dialogWidth: { type: String, default: '50%' },
-    labelWidth: { type: String, default: '80px' }
+    entityFormRules: Object
   },
   emits: {
     create: null,
     update: null
   },
-  inject: ['dataManager', 'compManager'],
+  inject: ['dataManager', 'compManager', 'settingManager'],
   data () {
     return {
       visible: false,
@@ -61,6 +58,12 @@ export default {
         case 'update':
           return '编辑' + this.entityDisplayName
       }
+    },
+    labelWidth () {
+      return this.settingManager.settings.form.labelWidth
+    },
+    dialogWidth () {
+      return this.settingManager.settings.form.dialogWidth
     }
   },
   methods: {

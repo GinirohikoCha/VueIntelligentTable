@@ -1,5 +1,6 @@
 <template>
   <el-row>
+    <!--  基础Form  -->
     <el-col
       v-for="formColumn in formItems"
       :key="formColumn.name"
@@ -12,6 +13,22 @@
           v-model:meta="formColumn.meta"
           v-model:select-options="modelSelectOptions"
           :form="formColumn"
+          :form-data="modelEntityData"/>
+      </el-form-item>
+    </el-col>
+    <!--  Prop Form  -->
+    <el-col
+      v-for="propColumn in modelEntityData.props"
+      :key="propColumn.name"
+      :span="propColumn.meta?.span || 12">
+      <el-form-item :label="propColumn.title" :prop="propColumn.name">
+        <component
+          :is="propColumn.component"
+          class="cha-form-item"
+          v-model="propColumn.value"
+          v-model:meta="propColumn.meta"
+          v-model:select-options="modelSelectOptions"
+          :form="propColumn"
           :form-data="modelEntityData"/>
       </el-form-item>
     </el-col>
