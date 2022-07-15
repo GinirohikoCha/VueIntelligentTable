@@ -10,7 +10,7 @@
       </el-tab-pane>
       <!--    动态附加页面    -->
       <el-tab-pane v-for="tab in detailTabs" :key="tab" :label="tab" :name="tab" :lazy="true">
-        <slot :name="tab" :entity-form-data="entityData" :visible="visible" :close="close"/>
+        <slot :name="tab" :entity-data="entityData" :select-options="selectOptions" :visible="visible" :close="close"/>
       </el-tab-pane>
     </el-tabs>
   </div>

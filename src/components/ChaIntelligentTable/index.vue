@@ -57,7 +57,11 @@
           :entity-data="entityData"
           :visible="visible"
           :close="close"
-          v-model:select-options="selectOptions"/>
+          v-model:select-options="selectOptions">
+          <template v-for="tab in detailTabs" v-slot:[tab]>
+            <slot :name="tab" :entity-data="entityData" :select-options="selectOptions" :visible="visible" :close="close"/>
+          </template>
+        </cha-detail-panel>
       </slot>
     </template>
     <!--  ChaFormDialog  -->
