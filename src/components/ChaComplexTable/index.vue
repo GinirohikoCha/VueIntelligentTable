@@ -205,6 +205,9 @@ export default {
     getDataManager () {
       return this.dataManager
     },
+    getCompManager () {
+      return this.compManager
+    },
     /* >>>>>> Internal Methods <<<<<< */
     newDataManager () {
       if (this.dataMode === 'local') {
