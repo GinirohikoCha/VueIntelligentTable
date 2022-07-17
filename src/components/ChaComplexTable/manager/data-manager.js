@@ -201,7 +201,9 @@ export class RemoteDataManager extends DataManager {
     return new Promise((resolve, reject) => {
       const listMethod = this.crudListMethod || list
 
-      listMethod(this.entityName, { page: this.page, query: this.query }).then(response => {
+      const page = this.pageMode === 'disable' ? null : this.page
+
+      listMethod(this.entityName, { page: page, query: this.query }).then(response => {
         this.data = response.data.items
         this.total = response.data.total
         switch (this.pageMode) {

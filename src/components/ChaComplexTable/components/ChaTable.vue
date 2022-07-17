@@ -3,12 +3,14 @@
     ref="chaTable"
     class="cha-table"
     v-loading="loading"
+    row-key="id"
     :data="displayData"
     :size="'small'"
     :max-height="tableHeight"
     :class="{ 'cha-table-fullScreen': fullScreen }"
     :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
     border
+    :default-expand-all="this.settingManager.settings.table.defaultExpandAll"
     @selection-change="handleSelectionChange">
     <!--  >>> 序号列 Slot <<<  -->
     <slot name="table-index-column">

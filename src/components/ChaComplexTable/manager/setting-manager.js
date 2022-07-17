@@ -16,7 +16,8 @@ const DEFAULT_SETTINGS = {
   },
   table: {
     selectable: true,
-    resultMessage: true
+    resultMessage: true,
+    defaultExpandAll: false
   },
   form: {
     labelWidth: '80px',
