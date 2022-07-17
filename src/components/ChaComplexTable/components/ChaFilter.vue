@@ -11,7 +11,7 @@
         :setResetMethod="setResetMethod"/>
 
       <!--   筛选项操作按钮   -->
-      <el-col :span="4" :offset="offset" style="margin-top: 5px">
+      <el-col :span="buttonsSpan" :offset="offset" style="margin-top: 5px">
         <el-button class="filter-button" :size="'small'" @click="handleReset">
           <el-icon class="el-icon--left"><RefreshLeft /></el-icon>{{ '重置' }}
         </el-button>
@@ -38,7 +38,7 @@ export default {
     ArrowUp,
     ArrowDown
   },
-  inject: ['dataManager', 'compManager'],
+  inject: ['dataManager', 'compManager', 'settingManager'],
   data () {
     return {
       collapse: true,
@@ -46,6 +46,11 @@ export default {
       offset: 20,
       query: {},
       reset: undefined
+    }
+  },
+  computed: {
+    buttonsSpan () {
+      return this.settingManager.settings.filter.buttonsSpan
     }
   },
   methods: {
@@ -56,7 +61,7 @@ export default {
       this.collapseOn = bool
     },
     updateOffset (filterCol) {
-      this.offset = 20 - filterCol
+      this.offset = 24 - this.buttonsSpan - filterCol
     },
     updateQuery (query) {
       this.query = query

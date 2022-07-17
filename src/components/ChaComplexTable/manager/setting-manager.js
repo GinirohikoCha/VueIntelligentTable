@@ -11,6 +11,9 @@ const DEFAULT_SETTINGS = {
     import: true,
     export: true
   },
+  filter: {
+    buttonsSpan: 4
+  },
   table: {
     selectable: true,
     resultMessage: true
