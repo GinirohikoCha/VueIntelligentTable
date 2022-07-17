@@ -134,12 +134,14 @@ export default {
       this.dataManager.select(selection)
     },
     handleDetail (row) {
-      this.dataManager.detail(row)
-      this.compManager.openDetailDialog()
+      if (this.compManager.openDetailDialog(row)) {
+        this.dataManager.detail(row)
+      }
     },
     handleUpdate (row) {
-      this.dataManager.edit(row)
-      this.compManager.openUpdateDialog()
+      if (this.compManager.openUpdateDialog(row)) {
+        this.dataManager.edit(row)
+      }
     },
     handleDelete (row) {
       ElMessageBox.confirm(

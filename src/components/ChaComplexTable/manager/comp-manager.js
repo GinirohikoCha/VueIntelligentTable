@@ -40,33 +40,36 @@ export class CompManager {
     }
   }
 
-  openDetailDialog () {
+  openDetailDialog (entity) {
     if (this.detailAction) {
-      this.detailAction()
-      return
+      this.detailAction(entity)
+      return false
     }
     if (this.detailDialog) {
       this.detailDialog.openDialog()
+      return true
     }
   }
 
-  openCreateDialog () {
+  openCreateDialog (entity) {
     if (this.createAction) {
-      this.createAction()
-      return
+      this.createAction(entity)
+      return false
     }
     if (this.formDialog) {
       this.formDialog.openDialog('create')
+      return true
     }
   }
 
   openUpdateDialog () {
     if (this.editAction) {
       this.editAction()
-      return
+      return false
     }
     if (this.formDialog) {
       this.formDialog.openDialog('update')
+      return true
     }
   }
 
