@@ -56,6 +56,12 @@ export class DataManager {
    * */
   editIndex = -1
 
+  crudListMethod
+  crudDetailMethod
+  crudCreateMethod
+  crudUpdateMethod
+  crudDeleteMethod
+
   constructor (pageMode) {
     this.pageMode = pageMode
   }
@@ -63,7 +69,7 @@ export class DataManager {
   setCrudMethods (list, detail, create, updateBatch, deleteBatch) {
     this.crudListMethod = list
     this.crudDetailMethod = detail
-    this.crudCreateMthod = create
+    this.crudCreateMethod = create
     this.crudUpdateMethod = updateBatch
     this.crudDeleteMethod = deleteBatch
   }
@@ -230,7 +236,7 @@ export class RemoteDataManager extends DataManager {
   }
 
   create (entity) {
-    const createMethod = this.crudCreateMthod || create
+    const createMethod = this.crudCreateMethod || create
 
     return new Promise((resolve, reject) => {
       createMethod(this.entityName, entity).then(response => {
