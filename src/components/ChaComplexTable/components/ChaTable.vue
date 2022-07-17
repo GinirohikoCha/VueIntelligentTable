@@ -166,7 +166,6 @@ export default {
     }
   },
   mounted () {
-    this.refresh()
     const that = this
     // 监听全屏按下ESC退出
     document.onkeydown = (e) => {

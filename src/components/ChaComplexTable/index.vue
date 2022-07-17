@@ -18,7 +18,6 @@
 
     <!--  表格操作栏  -->
     <cha-action-bar
-      v-if="settingManager.settings.general.filter"
       ref="chaActionBar"
       :entity-display-name="entityDisplayName">
       <template #action-bar-addon-batch="{ display }">
@@ -192,6 +191,8 @@ export default {
     )
     if (this.data) {
       this.dataManager.data = this.data
+    } else {
+      this.refresh()
     }
   },
   methods: {
