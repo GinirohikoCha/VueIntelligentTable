@@ -90,7 +90,7 @@ export default {
           array.push({ text: parentText ? parentText + '/' + item.label : item.label, value: item.value })
         }
         item.children.forEach(child => {
-          array.push(...this.flattenCascader(checkStrictly, child, item.label))
+          array.push(...this.flattenCascader(checkStrictly, child, parentText ? parentText + '/' + item.label : item.label))
         })
         return array
       } else {
