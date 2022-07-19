@@ -138,7 +138,9 @@ export class DataManager {
   detail (entity) {
     return new Promise((resolve) => {
       this.detailData = entity
-      resolve()
+      resolve({
+        message: '操作成功'
+      })
     })
   }
 
@@ -146,7 +148,9 @@ export class DataManager {
     return new Promise(resolve => {
       this.data.push(entity)
       this.createData = {}
-      resolve()
+      resolve({
+        message: '操作成功'
+      })
     })
   }
 
@@ -155,7 +159,9 @@ export class DataManager {
       _.assign(this.data[this.editIndex], entity)
       this.editIndex = -1
       this.updateData = {}
-      resolve()
+      resolve({
+        message: '操作成功'
+      })
     })
   }
 
@@ -163,7 +169,9 @@ export class DataManager {
     return new Promise((resolve) => {
       const index = this.data.indexOf(entity)
       this.data.splice(index, 1)
-      resolve()
+      resolve({
+        message: '操作成功'
+      })
     })
   }
 
@@ -172,7 +180,9 @@ export class DataManager {
       for (const entity of entities) {
         this.delete(entity).then(() => {})
       }
-      resolve()
+      resolve({
+        message: '操作成功'
+      })
     })
   }
 
